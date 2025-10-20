@@ -1,28 +1,38 @@
 import React, { useState } from 'react'
 
- function TaskForm() {
+ function TaskForm({addTask}) {
   const [task, setTask] = useState('');
   const [priority, setPriority] = useState('Medium');
   const [category, setCategory] = useState('General');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addTask({text: task, priority, category, completed: false},
+    )
+
+    //reset
+    setTask('');
+    setPriority('Medium');
+    setCategory('General');
+  }
   return (
     
-     <form action="">
+     <form onSubmit={handleSubmit}>
       <div>
-        <input type="text" onChange={(e) => setTask(e.target.value)}/>
+        <input  type="text" value={task} placeholder='Enter the text' onChange={(e) => setTask(e.target.value)}/>
         <button>Add task</button>
-       <select onChange={(e)=> setPriority(e.target.value)}>
+       <select value={priority} onChange={(e)=> setPriority(e.target.value)}>
         <option value="High">High</option>
         <option value="Medium">Medium</option>
         <option value="Low">Low</option>
        </select>
 
-       <select onChange={(e)=> setCategory(e.target.value)}>
+       <select  value={category} onChange={(e)=> setCategory(e.target.value)}>
         <option value="General">General</option>
         <option value="Work">Work</option>
         <option value="Personal">Personal</option>
        </select>
       </div>
-        <p>{task} {priority} {category}</p>
+       
      </form>
   
   )
